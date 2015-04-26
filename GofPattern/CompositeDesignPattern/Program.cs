@@ -1,4 +1,8 @@
 ﻿using System;
+using CompositeDesignPattern.After;
+using City = CompositeDesignPattern.After.City;
+using Division = CompositeDesignPattern.After.Division;
+using Store = CompositeDesignPattern.After.Store;
 
 namespace CompositeDesignPattern
 {
@@ -6,41 +10,36 @@ namespace CompositeDesignPattern
     {
         public static void Main(string[] args)
         {
-            Employee CEO = new Employee("John", "CEO", 30000);
+            IProfitable store1 = new Store
+            {
+                Id = 1,
+                Name = "Malibagh BFC",
+                Profit = 2
+            };
+            IProfitable store2 = new Store
+            {
+                Id = 2,
+                Name = "Gulshan BFC",
+                Profit = 5
+            };
 
-            Employee headSales = new Employee("Robert", "Head Sales", 20000);
+            IProfitable city = new City
+            {
+                Id = 10,
+                Name = "Dhaka"
+            };
+            city.AddChild(store1);
+            city.AddChild(store2);
 
-            Employee headMarketing = new Employee("Michel", "Head Marketing", 20000);
-
-            Employee clerk1 = new Employee("Laura", "Marketing", 10000);
-            Employee clerk2 = new Employee("Bob", "Marketing", 10000);
-
-            Employee salesExecutive1 = new Employee("Richard", "Sales", 10000);
-            Employee salesExecutive2 = new Employee("Rob", "Sales", 10000);
-
-            CEO.add(headSales);
-            CEO.add(headMarketing);
-
-            headSales.add(salesExecutive1);
-            headSales.add(salesExecutive2);
-
-            headMarketing.add(clerk1);
-            headMarketing.add(clerk2);
-
-            //print all employees of the organization
-
-            Console.WriteLine(CEO);
-
-            //foreach (Employee headEmployy in CEO.getSubordinates())
-            //{
-            //    Console.WriteLine(headEmployy);
-            //    foreach (Employee employee in headEmployy.getSubordinates())
-            //    {
-            //        Console.WriteLine(employee);
-            //    }
-            //}
-
-            Console.Read();
+            IProfitable division = new Division
+            {
+                Id = 1,
+                Name = "Rajshahi"
+            };
+            division.AddChild(city);
+            int totalProfit = division.GetProfit();
+            Console.WriteLine("Total Profit of {0} division is : {1}", division.Name, totalProfit);
+            Console.ReadLine();
         }
     }
 }
